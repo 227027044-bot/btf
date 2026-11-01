@@ -1,0 +1,462 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TravelEase - Booking Confirmation</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Poppins, sans-serif;
+    background: linear-gradient(135deg,#dbeafe,#f3e8ff,#fce7f3);
+    min-height: 100vh;
+    color: #243047;
+}
+
+header {
+    background: linear-gradient(100deg,#4338ca,#9333ea,#db2777);
+    padding: 20px 8%;
+    color: white;
+}
+
+header h2 {
+    font-size: 25px;
+}
+
+.container {
+    max-width: 750px;
+    margin: 40px auto;
+    padding: 30px;
+}
+
+.success {
+    background: white;
+    padding: 35px;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0 10px 35px #0002;
+    margin-bottom: 25px;
+}
+
+.check {
+    width: 75px;
+    height: 75px;
+    background: #dcfce7;
+    color: #16a34a;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 45px;
+    margin: auto auto 15px;
+}
+
+.success h1 {
+    color: #16a34a;
+    margin-bottom: 10px;
+}
+
+.success p {
+    color: #64748b;
+}
+
+.invoice {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 35px #0002;
+}
+
+.invoice h2 {
+    color: #4338ca;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 13px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.row span:first-child {
+    color: #64748b;
+}
+
+.row span:last-child {
+    font-weight: 600;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.total {
+    margin-top: 15px;
+    background: #ede9fe;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    color: #4338ca;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+button {
+    flex: 1;
+    min-width: 150px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(100deg,#4338ca,#9333ea);
+}
+
+.home {
+    background: linear-gradient(100deg,#16a34a,#059669);
+}
+
+.pdf {
+    background: linear-gradient(100deg,#dc2626,#ea580c);
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+@media print {
+    body {
+        background: white;
+    }
+
+    header, .buttons {
+        display: none;
+    }
+
+    .container {
+        margin: 0 auto;
+    }
+
+    .success, .invoice {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}
+
+@media(max-width:600px) {
+    .container {
+        padding: 15px;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    .row {
+        font-size: 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>✈ TravelEase</h2>
+</header>
+
+<div class="container">
+
+    <div class="success">
+
+        <div class="check">✓</div>
+
+        <h1>Thank You!</h1>
+
+        <h2>Your Booking is Confirmed</h2>
+
+        <p>Your TravelEase booking has been successfully recorded.</p>
+
+    </div>
+
+    <div class="invoice">
+
+        <h2>🧾 Booking Invoice</h2>
+
+        <div class="row">
+            <span>Booking ID</span>
+            <span id="bookingId"></span>
+        </div>
+
+        <div class="row">
+            <span>Passenger Name</span>
+            <span id="passengerName"></span>
+        </div>
+
+        <div class="row">
+            <span>Phone Number</span>
+            <span id="passengerPhone"></span>
+        </div>
+
+        <div class="row">
+            <span>From</span>
+            <span id="source"></span>
+        </div>
+
+        <div class="row">
+            <span>Destination</span>
+            <span id="destination"></span>
+        </div>
+
+        <div class="row">
+            <span>Journey Date</span>
+            <span id="journeyDate"></span>
+        </div>
+
+        <div class="row">
+            <span>Transport</span>
+            <span id="transport"></span>
+        </div>
+
+        <div class="row">
+            <span>Selected Seats</span>
+            <span id="seats"></span>
+        </div>
+
+        <div class="row">
+            <span>Payment Method</span>
+            <span id="paymentMethod"></span>
+        </div>
+
+        <div class="row">
+            <span>Booking Status</span>
+            <span style="color:#16a34a">Confirmed ✓</span>
+        </div>
+
+        <div class="total">
+            <span>Total Amount</span>
+            <span>₹<span id="amount">0</span></span>
+        </div>
+
+        <div class="buttons">
+
+            <button class="pdf" onclick="downloadPDF()">
+                📄 Download PDF Ticket
+            </button>
+
+            <button onclick="window.print()">
+                Print Bill
+            </button>
+
+            <button class="home" onclick="location.href='index.html'">
+                Back to Home
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- PDF GENERATION LIBRARY -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+
+const booking = JSON.parse(
+    localStorage.getItem("latestBooking") || "null"
+);
+
+if (!booking) {
+
+    alert("No booking details found. Please complete your booking first.");
+
+    window.location.href = "index.html";
+
+} else {
+
+    document.getElementById("bookingId").textContent =
+        booking.bookingId || "-";
+
+    document.getElementById("passengerName").textContent =
+        booking.name || "-";
+
+    document.getElementById("passengerPhone").textContent =
+        booking.phone || "-";
+
+    document.getElementById("source").textContent =
+        booking.source || "-";
+
+    document.getElementById("destination").textContent =
+        booking.destination || "-";
+
+    document.getElementById("journeyDate").textContent =
+        booking.date || "-";
+
+    document.getElementById("transport").textContent =
+        booking.transport || "-";
+
+    document.getElementById("seats").textContent =
+        (booking.seats || []).join(", ") || "-";
+
+    document.getElementById("paymentMethod").textContent =
+        booking.paymentMethod || "-";
+
+    document.getElementById("amount").textContent =
+        Number(booking.amount || 0).toLocaleString("en-IN");
+
+}
+
+
+// DOWNLOAD PDF TICKET
+
+function downloadPDF() {
+
+    if (!booking) {
+        alert("Booking details not found!");
+        return;
+    }
+
+    if (!window.jspdf) {
+        alert("PDF library load ஆகவில்லை. Internet connection check பண்ணுங்க.");
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF();
+
+    // HEADER
+    doc.setFillColor(67, 56, 202);
+    doc.rect(0, 0, 210, 38, "F");
+
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(23);
+    doc.setFont("helvetica", "bold");
+    doc.text("TravelEase", 20, 18);
+
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "normal");
+    doc.text("Your Journey, Our Responsibility", 20, 28);
+
+    // TICKET TITLE
+    doc.setTextColor(22, 163, 74);
+    doc.setFontSize(19);
+    doc.setFont("helvetica", "bold");
+    doc.text("BOOKING CONFIRMED", 20, 55);
+
+    doc.setTextColor(80, 80, 80);
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "normal");
+    doc.text("Your ticket has been successfully generated.", 20, 64);
+
+    // BOOKING DETAILS
+    const details = [
+        ["Booking ID", booking.bookingId || "-"],
+        ["Passenger Name", booking.name || "-"],
+        ["Phone Number", booking.phone || "-"],
+        ["From", booking.source || "-"],
+        ["Destination", booking.destination || "-"],
+        ["Journey Date", booking.date || "-"],
+        ["Transport", booking.transport || "-"],
+        ["Selected Seats", (booking.seats || []).join(", ") || "-"],
+        ["Payment Method", booking.paymentMethod || "-"],
+        ["Booking Status", "Confirmed"]
+    ];
+
+    let y = 82;
+
+    details.forEach((item, index) => {
+
+        if (index % 2 === 0) {
+            doc.setFillColor(245, 243, 255);
+            doc.rect(18, y - 7, 174, 13, "F");
+        }
+
+        doc.setTextColor(100, 100, 100);
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+        doc.text(item[0], 23, y);
+
+        doc.setTextColor(36, 48, 71);
+        doc.setFont("helvetica", "bold");
+
+        const value = doc.splitTextToSize(String(item[1]), 95);
+        doc.text(value, 105, y);
+
+        y += Math.max(13, value.length * 5 + 5);
+
+    });
+
+    // TOTAL AMOUNT
+    y += 8;
+
+    doc.setFillColor(237, 233, 254);
+    doc.roundedRect(18, y, 174, 22, 3, 3, "F");
+
+    doc.setTextColor(67, 56, 202);
+    doc.setFontSize(13);
+    doc.setFont("helvetica", "bold");
+
+    doc.text("TOTAL AMOUNT", 25, y + 14);
+
+    doc.text(
+        "Rs. " + Number(booking.amount || 0).toLocaleString("en-IN"),
+        185,
+        y + 14,
+        { align: "right" }
+    );
+
+    // FOOTER
+    doc.setTextColor(120, 120, 120);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+
+    doc.text(
+        "Thank you for choosing TravelEase!",
+        105,
+        275,
+        { align: "center" }
+    );
+
+    doc.text(
+        "This is a demo booking confirmation ticket.",
+        105,
+        282,
+        { align: "center" }
+    );
+
+    // SAVE PDF
+    const fileName =
+        "TravelEase_Ticket_" +
+        String(booking.bookingId || "Booking").replace(/[^a-zA-Z0-9_-]/g, "") +
+        ".pdf";
+
+    doc.save(fileName);
+
+}
+
+</script>
+
+</body>
+</html>
+```

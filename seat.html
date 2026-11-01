@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelEase - Seat Selection</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .seat-legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 14px;
+        }
+
+        .legend-box {
+            width: 17px;
+            height: 17px;
+            border-radius: 4px;
+        }
+
+        .available-color { background: #22c55e; }
+        .booked-color { background: #ef4444; }
+        .selected-color { background: #2563eb; }
+        .waiting-color { background: #facc15; }
+
+        .seat-btn {
+            min-width: 48px;
+            min-height: 42px;
+            margin: 6px;
+            border: none;
+            border-radius: 7px;
+            background: #22c55e;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .seat-btn.selected {
+            background: #2563eb !important;
+            color: white;
+        }
+
+        .seat-btn.booked {
+            background: #ef4444 !important;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        .seat-btn:disabled {
+            opacity: 1;
+        }
+
+        .waiting-section {
+            display: none;
+            background: #fff7d6;
+            border: 1px solid #facc15;
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .waiting-section button {
+            background: #ca8a04;
+            color: white;
+            padding: 11px 18px;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .waiting-message {
+            margin-top: 12px;
+            font-weight: 600;
+        }
+
+        .seat-layout {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <h2>TravelEase</h2>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="mybookings.html">My Bookings</a>
+    </nav>
+</header>
+
+<main class="page-container">
+
+    <h1>Select Your Seats</h1>
+
+    <div class="card">
+
+        <h3>Choose Available Seats</h3>
+
+        <div class="seat-legend">
+
+            <div class="legend-item">
+                <span class="legend-box available-color"></span>
+                Available
+            </div>
+
+            <div class="legend-item">
+                <span class="legend-box booked-color"></span>
+                Booked
+            </div>
+
+            <div class="legend-item">
+                <span class="legend-box selected-color"></span>
+                Selected
+            </div>
+
+            <div class="legend-item">
+                <span class="legend-box waiting-color"></span>
+                Waiting List
+            </div>
+
+        </div>
+
+        <div class="seat-layout" id="seatLayout">
+
+            <button class="seat-btn" data-seat="A1">A1</button>
+            <button class="seat-btn" data-seat="A2">A2</button>
+            <button class="seat-btn" data-seat="A3">A3</button>
+            <button class="seat-btn" data-seat="A4">A4</button>
+
+
+
+            <button class="seat-btn" data-seat="B1">B1</button>
+            <button class="seat-btn" data-seat="B2">B2</button>
+            <button class="seat-btn" data-seat="B3">B3</button>
+            <button class="seat-btn" data-seat="B4">B4</button>
+
+    
+
+            <button class="seat-btn" data-seat="C1">C1</button>
+            <button class="seat-btn" data-seat="C2">C2</button>
+            <button class="seat-btn" data-seat="C3">C3</button>
+            <button class="seat-btn" data-seat="C4">C4</button>
+
+        
+
+            <button class="seat-btn" data-seat="D1">D1</button>
+            <button class="seat-btn" data-seat="D2">D2</button>
+            <button class="seat-btn" data-seat="D3">D3</button>
+            <button class="seat-btn" data-seat="D4">D4</button>
+
+        
+
+            <button class="seat-btn" data-seat="E1">E1</button>
+            <button class="seat-btn" data-seat="E2">E2</button>
+            <button class="seat-btn" data-seat="E3">E3</button>
+            <button class="seat-btn" data-seat="E4">E4</button>
+
+        
+
+            <button class="seat-btn" data-seat="F1">F1</button>
+            <button class="seat-btn" data-seat="F2">F2</button>
+            <button class="seat-btn" data-seat="F3">F3</button>
+            <button class="seat-btn" data-seat="F4">F4</button>
+
+        </div>
+
+        <p>Selected Seats:
+            <span id="selectedSeats">None</span>
+        </p>
+
+        <p>Total Amount:
+            ₹<span id="seatTotal">0</span>
+        </p>
+
+        <button type="button" id="continueBooking">
+            Continue
+        </button>
+
+        <div class="waiting-section" id="waitingSection">
+
+            <h3>All Seats Are Booked!</h3>
+
+            <p>
+                Sorry! No available seats for this journey.
+                You can join the waiting list.
+            </p>
+
+            <button type="button" id="joinWaiting">
+                Join Waiting List
+            </button>
+
+            <p class="waiting-message" id="waitingMessage"></p>
+
+        </div>
+
+    </div>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>

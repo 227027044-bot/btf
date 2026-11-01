@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelEase - Passenger Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+    <h2>TravelEase</h2>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="mybookings.html">My Bookings</a>
+    </nav>
+</header>
+
+<main class="page-container">
+    <h1>Passenger Information</h1>
+
+    <div class="card">
+        <form id="passengerForm">
+
+            <div class="form-group">
+                <label>Passenger Name</label>
+                <input type="text" id="passengerName" required>
+            </div>
+
+            <div class="form-group">
+                <label>Age</label>
+                <input type="number" id="passengerAge" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label>Gender</label>
+                <select id="passengerGender" required>
+                    <option value="">Select Gender</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="passengerEmail" required>
+            </div>
+
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" id="passengerPhone" required>
+            </div>
+
+            <button type="submit">Continue to Payment</button>
+
+        </form>
+    </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

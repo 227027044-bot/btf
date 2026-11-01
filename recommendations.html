@@ -1,0 +1,511 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TravelEase - Smart Recommendations</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: #f4f7fb;
+    font-family: Arial, sans-serif;
+}
+
+.recommend-page {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.recommend-hero {
+    background: linear-gradient(120deg,#4338ca,#9333ea,#db2777);
+    color: white;
+    padding: 40px 25px;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.recommend-hero h1 {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.recommend-hero p {
+    opacity: .9;
+}
+
+.planner {
+    background: white;
+    padding: 28px;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px #0001;
+    margin-bottom: 30px;
+}
+
+.planner h2 {
+    color: #4338ca;
+    margin-bottom: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    gap: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d5d8e2;
+    border-radius: 9px;
+    font-size: 15px;
+}
+
+.recommend-btn {
+    background: linear-gradient(100deg,#4338ca,#9333ea);
+    color: white;
+    border: none;
+    padding: 13px 22px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.preference-title {
+    text-align: center;
+    margin: 35px 0 20px;
+    color: #243047;
+}
+
+.preference-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 20px;
+}
+
+.preference-card {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 5px 20px #0001;
+    transition: .3s;
+}
+
+.preference-card:hover {
+    transform: translateY(-5px);
+}
+
+.preference-card .icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+.preference-card h3 {
+    color: #4338ca;
+    margin-bottom: 10px;
+}
+
+.preference-card p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.preference-card button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #4338ca;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#recommendationResult {
+    margin-top: 30px;
+    display: none;
+    background: white;
+    padding: 28px;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px #0001;
+}
+
+#recommendationResult h2 {
+    color: #4338ca;
+    margin-bottom: 15px;
+}
+
+.result-item {
+    background: #f5f3ff;
+    padding: 20px;
+    border-radius: 12px;
+    line-height: 2;
+}
+
+.result-item h3 {
+    color: #4338ca;
+}
+
+.result-item strong {
+    color: #059669;
+}
+
+.book-now {
+    margin-top: 18px;
+    padding: 13px 25px;
+    background: #059669;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@media(max-width:600px) {
+    .recommend-hero h1 {
+        font-size: 25px;
+    }
+
+    .planner {
+        padding: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <h2>TravelEase</h2>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="results.html">Book Tickets</a>
+        <a href="mybookings.html">My Bookings</a>
+    </nav>
+</header>
+
+
+<main class="recommend-page">
+
+    <section class="recommend-hero">
+        <h1>✈ Smart Travel Recommendations</h1>
+        <p>Find the best travel option based on your budget and preferences.</p>
+    </section>
+
+
+    <!-- TRAVEL PLANNER -->
+
+    <section class="planner">
+
+        <h2>🎯 Plan Your Journey</h2>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>From</label>
+                <input type="text" id="source" placeholder="Enter starting city">
+            </div>
+
+            <div class="form-group">
+                <label>Destination</label>
+                <select id="destination">
+                    <option value="">Select Destination</option>
+                    <option>Chennai</option>
+                    <option>Coimbatore</option>
+                    <option>Madurai</option>
+                    <option>Thanjavur</option>
+                    <option>Kumbakonam</option>
+                    <option>Bangalore</option>
+                    <option>Kerala</option>
+                    <option>Ooty</option>
+                    <option>Pondicherry</option>
+                    <option>Tirunelveli</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Travel Budget (₹)</label>
+                <input type="number" id="budget" placeholder="Example: 1000" min="1">
+            </div>
+
+            <div class="form-group">
+                <label>Journey Date</label>
+                <input type="date" id="travelDate">
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PREFERENCE CARDS -->
+
+    <h2 class="preference-title">Choose Your Travel Preference</h2>
+
+    <div class="preference-grid">
+
+        <div class="preference-card">
+            <div class="icon">💰</div>
+            <h3>Budget Friendly</h3>
+            <p>Find affordable travel options that suit your budget.</p>
+            <button onclick="getRecommendation('Budget')">Explore</button>
+        </div>
+
+        <div class="preference-card">
+            <div class="icon">⚡</div>
+            <h3>Fastest Journey</h3>
+            <p>Choose transport with the shortest travel duration.</p>
+            <button onclick="getRecommendation('Fastest')">Explore</button>
+        </div>
+
+        <div class="preference-card">
+            <div class="icon">⭐</div>
+            <h3>Comfortable Journey</h3>
+            <p>Discover comfortable travel options for your journey.</p>
+            <button onclick="getRecommendation('Comfort')">Explore</button>
+        </div>
+
+    </div>
+
+
+    <!-- RECOMMENDATION RESULT -->
+
+    <section id="recommendationResult">
+
+        <h2>✨ Your Smart Recommendation</h2>
+
+        <div id="resultContent"></div>
+
+    </section>
+
+</main>
+
+
+<script>
+
+// DEMO RECOMMENDATION DATA
+
+const travelOptions = [
+
+    {
+        type: "Bus",
+        name: "KPN Travels",
+        fare: 450,
+        duration: 420,
+        comfort: 3,
+        description: "Affordable AC Sleeper Bus"
+    },
+
+    {
+        type: "Train",
+        name: "Express Train",
+        fare: 250,
+        duration: 360,
+        comfort: 4,
+        description: "Comfortable train journey"
+    },
+
+    {
+        type: "Flight",
+        name: "Vistara Airlines",
+        fare: 2499,
+        duration: 75,
+        comfort: 5,
+        description: "Premium and fastest journey"
+    },
+
+    {
+        type: "Bus",
+        name: "Orange Travels",
+        fare: 650,
+        duration: 390,
+        comfort: 4,
+        description: "Premium Sleeper Bus"
+    },
+
+    {
+        type: "Train",
+        name: "AC Express Train",
+        fare: 900,
+        duration: 350,
+        comfort: 5,
+        description: "Comfortable AC Train"
+    }
+
+];
+
+
+// RECOMMENDATION FUNCTION
+
+function getRecommendation(preference) {
+
+    const source = document.getElementById("source").value.trim();
+
+    const destination = document.getElementById("destination").value;
+
+    const budget = Number(document.getElementById("budget").value);
+
+    const travelDate = document.getElementById("travelDate").value;
+
+
+    if (!source || !destination || !budget || !travelDate) {
+
+        alert("Please enter From, Destination, Budget and Journey Date.");
+
+        return;
+    }
+
+    if (source.toLowerCase() === destination.toLowerCase()) {
+
+        alert("Source and destination cannot be the same.");
+
+        return;
+    }
+
+
+    let result;
+
+
+    if (preference === "Budget") {
+
+        const affordable = travelOptions.filter(item => item.fare <= budget);
+
+        result = affordable.sort((a,b) => a.fare - b.fare)[0];
+
+    }
+
+
+    if (preference === "Fastest") {
+
+        result = travelOptions
+            .filter(item => item.fare <= budget)
+            .sort((a,b) => a.duration - b.duration)[0];
+
+    }
+
+
+    if (preference === "Comfort") {
+
+        result = travelOptions
+            .filter(item => item.fare <= budget)
+            .sort((a,b) => b.comfort - a.comfort)[0];
+
+    }
+
+
+    const resultSection = document.getElementById("recommendationResult");
+
+    const content = document.getElementById("resultContent");
+
+
+    if (!result) {
+
+        content.innerHTML = `
+            <div class="result-item">
+                <h3>No suitable option found</h3>
+                <p>Your budget is too low for these demo travel options.</p>
+                <p>Try increasing your budget.</p>
+            </div>
+        `;
+
+        resultSection.style.display = "block";
+
+        return;
+    }
+
+
+    content.innerHTML = `
+
+        <div class="result-item">
+
+            <h3>🎉 ${result.name}</h3>
+
+            <p><strong>Travel Type:</strong> ${result.type}</p>
+
+            <p><strong>From:</strong> ${source}</p>
+
+            <p><strong>Destination:</strong> ${destination}</p>
+
+            <p><strong>Journey Date:</strong> ${travelDate}</p>
+
+            <p><strong>Estimated Fare:</strong> ₹${result.fare.toLocaleString("en-IN")}</p>
+
+            <p><strong>Travel Duration:</strong> ${Math.floor(result.duration / 60)} hours ${result.duration % 60} minutes</p>
+
+            <p><strong>Comfort Rating:</strong> ${"⭐".repeat(result.comfort)}</p>
+
+            <p>${result.description}</p>
+
+            <button class="book-now" onclick="bookRecommended()">
+                Book Now →
+            </button>
+
+        </div>
+
+    `;
+
+
+    localStorage.setItem("source", source);
+
+    localStorage.setItem("destination", destination);
+
+    localStorage.setItem("journeyDate", travelDate);
+
+    localStorage.setItem("transportMode", result.type);
+
+    localStorage.setItem("selectedMode", result.type);
+
+
+    resultSection.style.display = "block";
+
+    resultSection.scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+// GO TO RESULTS PAGE
+
+function bookRecommended() {
+
+    window.location.href = "results.html";
+
+}
+
+
+// DEFAULT VALUES
+
+document.getElementById("source").value =
+    localStorage.getItem("source") || "";
+
+document.getElementById("destination").value =
+    localStorage.getItem("destination") || "";
+
+document.getElementById("travelDate").value =
+    localStorage.getItem("journeyDate") || "";
+
+</script>
+
+</body>
+</html>
+```

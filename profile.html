@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelEase - My Profile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+    <h2>TravelEase</h2>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="mybookings.html">My Bookings</a>
+        <a href="login.html">Logout</a>
+    </nav>
+</header>
+
+<main class="page-container">
+    <h1>My Profile</h1>
+
+    <div class="card">
+        <form id="profileForm">
+
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="profileName" placeholder="Enter your name">
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="profileEmail" placeholder="Enter your email" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" id="profilePhone" placeholder="Enter phone number">
+            </div>
+
+            <button type="submit">Update Profile</button>
+
+            <p id="profileMessage"></p>
+
+        </form>
+    </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

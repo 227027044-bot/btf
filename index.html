@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelEase - Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+```
+<!-- NAVBAR -->
+<header class="navbar">
+    <h2>TravelEase</h2>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="results.html">Book Tickets</a>
+        <a href="mybookings.html">My Bookings</a>
+        <a href="recommendations.html">Recommendations</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+    </nav>
+</header>
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <h1>Explore the World with TravelEase</h1>
+    <p>Your Journey, Our Responsibility</p>
+</section>
+
+<!-- BOOKING SECTION -->
+<section class="booking-section">
+
+    <h2>Book Your Journey</h2>
+
+    <form id="searchForm">
+
+        <!-- FROM LOCATION -->
+        <input
+            type="text"
+            id="source"
+            list="cityList"
+            placeholder="From Location"
+            autocomplete="off"
+            required
+        >
+
+        <!-- TO LOCATION -->
+        <input
+            type="text"
+            id="destination"
+            list="cityList"
+            placeholder="To Location"
+            autocomplete="off"
+            required
+        >
+
+        <!-- CITY SUGGESTIONS -->
+        <datalist id="cityList">
+            <option value="Thanjavur"></option>
+            <option value="Trichy"></option>
+            <option value="Thiruvarur"></option>
+            <option value="Thiruvaiyaru"></option>
+            <option value="Chennai"></option>
+            <option value="Coimbatore"></option>
+            <option value="Madurai"></option>
+            <option value="Kumbakonam"></option>
+            <option value="Tirunelveli"></option>
+            <option value="Salem"></option>
+            <option value="Erode"></option>
+            <option value="Bangalore"></option>
+            <option value="Kerala"></option>
+            <option value="Pondicherry"></option>
+        </datalist>
+
+        <!-- JOURNEY DATE -->
+        <input
+            type="date"
+            id="journeyDate"
+            required
+        >
+
+        <h3>Select Transport</h3>
+
+        <!-- TRANSPORT OPTIONS -->
+        <div class="transport-options">
+
+            <button
+                type="button"
+                class="mode-btn"
+                data-mode="Bus">
+                🚌 Bus
+            </button>
+
+            <button
+                type="button"
+                class="mode-btn"
+                data-mode="Train">
+                🚆 Train
+            </button>
+
+            <button
+                type="button"
+                class="mode-btn"
+                data-mode="Flight">
+                ✈️ Flight
+            </button>
+
+        </div>
+
+        <!-- SEARCH BUTTON -->
+        <button type="submit">
+            Search Tickets
+        </button>
+
+    </form>
+
+</section>
+
+<!-- SERVICES SECTION -->
+<section class="services">
+
+    <h2>Our Services</h2>
+
+    <div class="card-container">
+
+        <div class="card">
+            <h3>🚌 Bus Booking</h3>
+            <p>Book your bus tickets easily and comfortably.</p>
+        </div>
+
+        <div class="card">
+            <h3>🚆 Train Booking</h3>
+            <p>Find your comfortable train journey.</p>
+        </div>
+
+        <div class="card">
+            <h3>✈️ Flight Booking</h3>
+            <p>Explore flights for your destination.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- RECOMMENDATION SECTION -->
+<section class="recommendation">
+
+    <h2>Smart Travel Recommendations</h2>
+
+    <p>
+        Discover suitable travel options based on your preferences.
+    </p>
+
+    <a href="recommendations.html">
+        Explore Recommendations
+    </a>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2026 TravelEase. All Rights Reserved.</p>
+</footer>
+
+<!-- JAVASCRIPT -->
+<script src="script.js"></script>
+```
+
+</body>
+</html>

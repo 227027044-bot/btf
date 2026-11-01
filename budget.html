@@ -1,0 +1,497 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TravelEase - Budget Calculator</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #f3f6fc;
+    color: #243047;
+}
+
+.navbar {
+    background: #172554;
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.navbar h2 {
+    font-size: 25px;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.navbar a:hover {
+    color: #93c5fd;
+}
+
+.hero {
+    background: linear-gradient(120deg, #1e3a8a, #2563eb);
+    color: white;
+    text-align: center;
+    padding: 45px 20px;
+}
+
+.hero h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 35px auto;
+    padding: 0 20px;
+}
+
+.calculator {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 25px;
+}
+
+.form-card, .result-card {
+    background: white;
+    padding: 28px;
+    border-radius: 16px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.06);
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #172554;
+}
+
+.form-group {
+    margin-bottom: 17px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d6deeb;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+}
+
+input:focus, select:focus {
+    border-color: #2563eb;
+}
+
+.calculate-btn {
+    width: 100%;
+    padding: 14px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.calculate-btn:hover {
+    background: #1d4ed8;
+}
+
+.result-card {
+    background: linear-gradient(150deg, #172554, #1e40af);
+    color: white;
+}
+
+.result-card h2 {
+    color: white;
+}
+
+.total-box {
+    background: rgba(255,255,255,0.12);
+    padding: 22px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.total-box p {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+.total-box h1 {
+    font-size: 34px;
+    margin-top: 8px;
+    color: #93c5fd;
+    overflow-wrap: anywhere;
+}
+
+.breakdown {
+    margin-top: 15px;
+}
+
+.breakdown div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    font-size: 14px;
+}
+
+.breakdown span:last-child {
+    font-weight: 600;
+    text-align: right;
+}
+
+.per-person {
+    background: #dbeafe;
+    color: #172554;
+    padding: 16px;
+    border-radius: 10px;
+    margin-top: 22px;
+    text-align: center;
+}
+
+.per-person h3 {
+    font-size: 23px;
+    margin-top: 5px;
+}
+
+.note {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 18px;
+    line-height: 1.6;
+}
+
+.reset-btn {
+    width: 100%;
+    margin-top: 18px;
+    padding: 11px;
+    border: 1px solid white;
+    background: transparent;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.reset-btn:hover {
+    background: white;
+    color: #172554;
+}
+
+footer {
+    text-align: center;
+    padding: 22px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+@media(max-width: 750px) {
+    .calculator {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 25px;
+    }
+
+    .navbar {
+        justify-content: center;
+    }
+
+    .navbar nav {
+        justify-content: center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <h2>✈ TravelEase</h2>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="results.html">Book Tickets</a>
+        <a href="recommendations.html">Recommendations</a>
+        <a href="mybookings.html">My Bookings</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>💰 Smart Travel Budget Calculator</h1>
+    <p>Plan your trip expenses and calculate your estimated travel budget.</p>
+</section>
+
+<main class="container">
+
+<div class="calculator">
+
+    <section class="form-card">
+
+        <h2>🧳 Enter Your Trip Details</h2>
+
+        <div class="form-group">
+            <label>From Location</label>
+            <input type="text" id="source" placeholder="Enter starting location">
+        </div>
+
+        <div class="form-group">
+            <label>Destination</label>
+            <input type="text" id="destination" placeholder="Enter destination">
+        </div>
+
+        <div class="form-group">
+            <label>Transport Type</label>
+            <select id="transport">
+                <option value="Bus">Bus</option>
+                <option value="Train">Train</option>
+                <option value="Flight">Flight</option>
+                <option value="Car">Car</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Travel Fare Per Person (₹)</label>
+            <input type="number" id="fare" min="0" placeholder="Example: 500">
+        </div>
+
+        <div class="form-group">
+            <label>Number of Travellers</label>
+            <input type="number" id="travellers" min="1" value="1">
+        </div>
+
+        <div class="form-group">
+            <label>Hotel Cost Per Night (₹)</label>
+            <input type="number" id="hotel" min="0" placeholder="Example: 1500">
+        </div>
+
+        <div class="form-group">
+            <label>Number of Hotel Nights</label>
+            <input type="number" id="nights" min="0" value="1">
+        </div>
+
+        <div class="form-group">
+            <label>Food Cost Per Person Per Day (₹)</label>
+            <input type="number" id="food" min="0" placeholder="Example: 300">
+        </div>
+
+        <div class="form-group">
+            <label>Number of Days</label>
+            <input type="number" id="days" min="1" value="2">
+        </div>
+
+        <div class="form-group">
+            <label>Local Transport Expense (₹)</label>
+            <input type="number" id="local" min="0" placeholder="Example: 500">
+        </div>
+
+        <button class="calculate-btn" onclick="calculateBudget()">
+            Calculate My Budget
+        </button>
+
+        <p class="note">
+            Note: Enter estimated expenses. This calculator provides
+            an approximate budget and does not represent live travel prices.
+        </p>
+
+    </section>
+
+    <section class="result-card">
+
+        <h2>📊 Your Budget Summary</h2>
+
+        <div class="total-box">
+            <p>Estimated Total Trip Cost</p>
+            <h1 id="total">₹0</h1>
+        </div>
+
+        <div class="breakdown">
+
+            <div>
+                <span>🚍 Travel Expense</span>
+                <span id="travelCost">₹0</span>
+            </div>
+
+            <div>
+                <span>🏨 Hotel Expense</span>
+                <span id="hotelCost">₹0</span>
+            </div>
+
+            <div>
+                <span>🍔 Food Expense</span>
+                <span id="foodCost">₹0</span>
+            </div>
+
+            <div>
+                <span>🚕 Local Transport</span>
+                <span id="localCost">₹0</span>
+            </div>
+
+        </div>
+
+        <div class="per-person">
+            <p>Estimated Cost Per Person</p>
+            <h3 id="perPerson">₹0</h3>
+        </div>
+
+        <button class="reset-btn" onclick="resetCalculator()">
+            Reset Calculator
+        </button>
+
+    </section>
+
+</div>
+
+</main>
+
+<footer>
+    © 2026 TravelEase | Smart Travel Booking & Recommendation System
+</footer>
+
+<script>
+
+function getValue(id) {
+    return Number(document.getElementById(id).value) || 0;
+}
+
+function formatCurrency(amount) {
+    return "₹" + amount.toLocaleString("en-IN");
+}
+
+function calculateBudget() {
+
+    const source = document.getElementById("source").value.trim();
+    const destination = document.getElementById("destination").value.trim();
+
+    const fare = getValue("fare");
+    const travellers = getValue("travellers");
+    const hotel = getValue("hotel");
+    const nights = getValue("nights");
+    const food = getValue("food");
+    const days = getValue("days");
+    const local = getValue("local");
+
+    const numbers = [fare, travellers, hotel, nights, food, days, local];
+
+    if (!source || !destination) {
+        alert("Please enter your starting location and destination.");
+        return;
+    }
+
+    if (source.toLowerCase() === destination.toLowerCase()) {
+        alert("Starting location and destination cannot be the same.");
+        return;
+    }
+
+    if (travellers < 1 || days < 1 || nights < 0 ||
+        numbers.some(value => value < 0)) {
+        alert("Please enter valid expense and traveller details.");
+        return;
+    }
+
+    const travelExpense = fare * travellers;
+    const hotelExpense = hotel * nights;
+    const foodExpense = food * days * travellers;
+    const localExpense = local;
+
+    const total = travelExpense + hotelExpense + foodExpense + localExpense;
+    const perPerson = total / travellers;
+
+    document.getElementById("total").textContent = formatCurrency(total);
+
+    document.getElementById("travelCost").textContent =
+        formatCurrency(travelExpense);
+
+    document.getElementById("hotelCost").textContent =
+        formatCurrency(hotelExpense);
+
+    document.getElementById("foodCost").textContent =
+        formatCurrency(foodExpense);
+
+    document.getElementById("localCost").textContent =
+        formatCurrency(localExpense);
+
+    document.getElementById("perPerson").textContent =
+        formatCurrency(perPerson);
+
+    localStorage.setItem("travelBudget", JSON.stringify({
+        source,
+        destination,
+        transport: document.getElementById("transport").value,
+        travellers,
+        travelExpense,
+        hotelExpense,
+        foodExpense,
+        localExpense,
+        total,
+        perPerson
+    }));
+}
+
+function resetCalculator() {
+
+    document.querySelectorAll("input").forEach(input => {
+        input.value = "";
+    });
+
+    document.getElementById("travellers").value = 1;
+    document.getElementById("days").value = 2;
+    document.getElementById("nights").value = 1;
+    document.getElementById("transport").selectedIndex = 0;
+
+    document.getElementById("total").textContent = "₹0";
+    document.getElementById("travelCost").textContent = "₹0";
+    document.getElementById("hotelCost").textContent = "₹0";
+    document.getElementById("foodCost").textContent = "₹0";
+    document.getElementById("localCost").textContent = "₹0";
+    document.getElementById("perPerson").textContent = "₹0";
+
+    localStorage.removeItem("travelBudget");
+}
+
+</script>
+
+</body>
+</html>
+```

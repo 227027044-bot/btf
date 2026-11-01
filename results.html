@@ -1,0 +1,528 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TravelEase - Search Results</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f4f7fb;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background: #073b4c;
+    color: white;
+    flex-wrap: wrap;
+}
+
+.navbar h2 {
+    margin: 0;
+    color: white;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.navbar nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.results-wrap {
+    max-width: 1450px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.journey-box {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    margin-bottom: 25px;
+}
+
+.back-link {
+    color: #087f70;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.results-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.results-heading h2 {
+    margin-bottom: 5px;
+}
+
+.results-heading p {
+    color: #666;
+}
+
+.filter-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.filter-row select {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    font-size: 14px;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 22px;
+}
+
+.travel-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.travel-card:hover {
+    transform: translateY(-5px);
+}
+
+.travel-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.travel-info {
+    padding: 18px;
+}
+
+.travel-info h3 {
+    margin: 0 0 12px;
+    color: #073b4c;
+    font-size: 19px;
+}
+
+.travel-meta {
+    color: #666;
+    line-height: 1.9;
+    font-size: 14px;
+}
+
+.travel-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+    gap: 10px;
+}
+
+.fare {
+    color: #087f70;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.book-btn {
+    background: #087f70;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.book-btn:hover {
+    background: #065e53;
+}
+
+.empty-msg {
+    background: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 12px;
+    grid-column: 1 / -1;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #073b4c;
+    color: white;
+    margin-top: 40px;
+}
+
+@media(max-width: 600px) {
+    .navbar {
+        gap: 15px;
+    }
+
+    .navbar nav {
+        gap: 12px;
+    }
+
+    .results-wrap {
+        padding: 12px;
+    }
+
+    .travel-card img {
+        height: 170px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <h2>TravelEase</h2>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="mybookings.html">My Bookings</a>
+        <a href="recommendations.html">Recommendations</a>
+        <a href="profile.html">Profile</a>
+    </nav>
+</header>
+
+<main class="results-wrap">
+
+    <section class="journey-box">
+
+        <a class="back-link" href="index.html">
+            ← Back to Search
+        </a>
+
+        <div class="results-heading">
+
+            <div>
+                <h2>Available Travel Options</h2>
+                <p id="journeyText">Choose your preferred journey</p>
+            </div>
+
+            <strong id="resultCount">30 Options</strong>
+
+        </div>
+
+        <div class="filter-row">
+
+            <select id="modeFilter">
+                <option value="All">All Transport</option>
+                <option value="Bus">Bus</option>
+                <option value="Train">Train</option>
+                <option value="Flight">Flight</option>
+            </select>
+
+            <select id="sortFilter">
+                <option value="recommended">Recommended</option>
+                <option value="low">Price: Low to High</option>
+                <option value="high">Price: High to Low</option>
+            </select>
+
+        </div>
+
+    </section>
+
+    <section class="results-grid" id="resultsGrid"></section>
+
+</main>
+
+<footer>
+    <p>© 2026 TravelEase. All Rights Reserved.</p>
+</footer>
+
+<script>
+
+// YOUR ORIGINAL IMAGES
+// Folder name: image
+// Image format: jpg
+
+const travelImages = {
+    bus: "image/bus.jpg",
+    train: "image/train.jpg",
+    flight: "image/flight.jpg"
+};
+
+
+// JOURNEY DETAILS
+
+const source = localStorage.getItem("source") || "Thanjavur";
+
+const destination = localStorage.getItem("destination") || "Chennai";
+
+const journeyDate = localStorage.getItem("journeyDate") || "";
+
+document.getElementById("journeyText").textContent =
+    source + " → " + destination +
+    (journeyDate ? " | " + journeyDate : "");
+
+
+// BUS DETAILS
+
+const busNames = [
+    "KPN Travels",
+    "SRM Transports",
+    "Parveen Travels",
+    "Rathimeena Travels",
+    "SETC Express",
+    "Orange Travels",
+    "SRS Travels",
+    "YBM Travels",
+    "National Travels",
+    "IntrCity SmartBus"
+];
+
+const busTimes = [
+    "06:00 AM", "07:30 AM", "09:00 AM",
+    "10:30 AM", "01:00 PM", "03:30 PM",
+    "06:00 PM", "08:00 PM", "09:30 PM",
+    "10:45 PM"
+];
+
+
+// TRAIN DETAILS
+
+const trainNames = [
+    "Coromandel Express",
+    "Chennai Express",
+    "Rockfort Express",
+    "Cholan Express",
+    "Vaigai Express",
+    "Pandian Express",
+    "Mysuru Express",
+    "Uzhavan Express",
+    "Mannai Express",
+    "Pallavan Express"
+];
+
+const trainTimes = [
+    "05:15 AM", "06:30 AM", "07:45 AM",
+    "09:00 AM", "11:20 AM", "01:40 PM",
+    "03:15 PM", "05:30 PM", "08:10 PM",
+    "10:00 PM"
+];
+
+
+// FLIGHT DETAILS
+
+const flightNames = [
+    "Vistara Airlines",
+    "IndiGo Airlines",
+    "Air India",
+    "Air India Express",
+    "Akasa Air",
+    "SpiceJet",
+    "Alliance Air",
+    "Star Air",
+    "Emirates",
+    "Singapore Airlines"
+];
+
+const flightTimes = [
+    "05:45 AM", "07:00 AM", "08:30 AM",
+    "10:15 AM", "12:00 PM", "02:20 PM",
+    "04:00 PM", "06:15 PM", "08:30 PM",
+    "10:10 PM"
+];
+
+
+// CREATE 30 TRAVEL OPTIONS
+
+const options = [];
+
+for (let i = 0; i < 10; i++) {
+
+    options.push({
+        type: "Bus",
+        name: busNames[i],
+        time: busTimes[i],
+        duration: ["6h 30m", "7h 00m", "6h 45m"][i % 3],
+        fare: 450 + (i * 55),
+        image: travelImages.bus,
+        tag: i === 0 ? "Popular" : "AC Sleeper"
+    });
+
+    options.push({
+        type: "Train",
+        name: trainNames[i],
+        time: trainTimes[i],
+        duration: ["5h 45m", "6h 10m", "6h 30m"][i % 3],
+        fare: 180 + (i * 45),
+        image: travelImages.train,
+        tag: i === 0 ? "Popular" : "Express Train"
+    });
+
+    options.push({
+        type: "Flight",
+        name: flightNames[i],
+        time: flightTimes[i],
+        duration: ["1h 05m", "1h 15m", "1h 25m"][i % 3],
+        fare: 2499 + (i * 350),
+        image: travelImages.flight,
+        tag: i === 0 ? "Fastest" : "Economy"
+    });
+
+}
+
+
+// DISPLAY RESULTS
+
+function renderResults() {
+
+    const mode = document.getElementById("modeFilter").value;
+
+    const sort = document.getElementById("sortFilter").value;
+
+    let list = options.filter(item => {
+        return mode === "All" || item.type === mode;
+    });
+
+    if (sort === "low") {
+        list.sort((a, b) => a.fare - b.fare);
+    }
+
+    if (sort === "high") {
+        list.sort((a, b) => b.fare - a.fare);
+    }
+
+    document.getElementById("resultCount").textContent =
+        list.length + " Options";
+
+    const grid = document.getElementById("resultsGrid");
+
+    grid.innerHTML = "";
+
+    if (list.length === 0) {
+        grid.innerHTML =
+            '<div class="empty-msg">No travel options found.</div>';
+        return;
+    }
+
+    list.forEach(item => {
+
+        const card = document.createElement("article");
+
+        card.className = "travel-card";
+
+        card.innerHTML = `
+
+            <img src="${item.image}" alt="${item.type} image">
+
+            <div class="travel-info">
+
+                <h3>${item.name}</h3>
+
+                <div class="travel-meta">
+
+                    ${item.type} · ${item.tag}
+
+                    <br>
+
+                    🕒 ${item.time}
+
+                    <br>
+
+                    ⏱ ${item.duration}
+
+                    <br>
+
+                    📍 ${source} → ${destination}
+
+                </div>
+
+                <div class="travel-bottom">
+
+                    <span class="fare">
+                        ₹${item.fare.toLocaleString("en-IN")}
+                    </span>
+
+                    <button class="book-btn">Book Now</button>
+
+                </div>
+
+            </div>
+        `;
+
+        card.querySelector(".book-btn").addEventListener("click", function() {
+
+            localStorage.setItem("selectedTransportName", item.name);
+
+            localStorage.setItem("selectedTransportType", item.type);
+
+            localStorage.setItem("selectedFare", String(item.fare));
+
+            localStorage.setItem("selectedTime", item.time);
+
+            localStorage.removeItem("selectedSeats");
+
+            localStorage.removeItem("totalAmount");
+
+            window.location.href = "details.html";
+
+        });
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+// TRANSPORT FILTER
+
+const savedMode =
+    localStorage.getItem("transportMode") ||
+    localStorage.getItem("selectedMode") ||
+    "All";
+
+document.getElementById("modeFilter").value =
+    ["Bus", "Train", "Flight"].includes(savedMode)
+        ? savedMode
+        : "All";
+
+document.getElementById("modeFilter")
+    .addEventListener("change", renderResults);
+
+document.getElementById("sortFilter")
+    .addEventListener("change", renderResults);
+
+
+// INITIAL DISPLAY
+
+renderResults();
+
+</script>
+
+</body>
+</html>
+```

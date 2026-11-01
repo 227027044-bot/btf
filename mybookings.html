@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelEase - My Bookings</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+    <h2>TravelEase</h2>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="recommendations.html">Recommendations</a>
+        <a href="profile.html">Profile</a>
+    </nav>
+</header>
+
+<main class="page-container">
+    <h1>My Bookings</h1>
+
+    <div class="card">
+        <h3>Booking History</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Date</th>
+                    <th>Transport</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody id="bookingTable">
+                <tr>
+                    <td colspan="7">No bookings available.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

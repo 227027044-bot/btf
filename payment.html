@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TravelEase - Payment</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Poppins, sans-serif;
+    background: linear-gradient(135deg,#dbeafe,#f3e8ff,#fce7f3);
+    min-height: 100vh;
+    color: #243047;
+}
+
+header {
+    background: linear-gradient(100deg,#4338ca,#9333ea,#db2777);
+    color: white;
+    padding: 20px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h2 {
+    font-size: 25px;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+}
+
+.container {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 22px;
+    box-shadow: 0 10px 35px #0002;
+}
+
+h1 {
+    text-align: center;
+    color: #4338ca;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+.amount-box {
+    background: linear-gradient(110deg,#4338ca,#9333ea);
+    color: white;
+    padding: 25px;
+    border-radius: 16px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.amount-box h2 {
+    font-size: 35px;
+    margin-top: 8px;
+}
+
+label {
+    display: block;
+    margin: 15px 0 7px;
+    font-weight: 600;
+}
+
+input, select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-family: inherit;
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: #7c3aed;
+}
+
+button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 15px;
+    background: linear-gradient(100deg,#16a34a,#059669);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.note {
+    margin-top: 18px;
+    color: #64748b;
+    font-size: 12px;
+    text-align: center;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>✈ TravelEase</h2>
+    <a href="index.html">Home</a>
+</header>
+
+<div class="container">
+
+    <h1>Complete Your Booking</h1>
+    <p class="subtitle">Review your amount and confirm your booking</p>
+
+    <div class="amount-box">
+        <p>Total Booking Amount</p>
+        <h2>₹<span id="paymentAmount">0</span></h2>
+    </div>
+
+    <form id="paymentForm">
+
+        <label>Payment Method</label>
+
+        <select id="paymentMethod" required>
+            <option value="">Select Payment Method</option>
+            <option value="UPI">UPI</option>
+            <option value="Debit Card">Debit Card</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Cash">Cash</option>
+        </select>
+
+        <label>UPI ID / Payment Reference (Demo)</label>
+
+        <input
+            type="text"
+            id="paymentReference"
+            placeholder="Enter UPI ID or reference number"
+            required
+        >
+
+        <button type="submit">Confirm Booking →</button>
+
+    </form>
+
+    <p class="note">
+        Demo project only. No real payment will be processed.
+    </p>
+
+</div>
+
+<script>
+
+const amount = Number(localStorage.getItem("totalAmount")) || 0;
+
+document.getElementById("paymentAmount").textContent =
+    amount.toLocaleString("en-IN");
+
+document.getElementById("paymentForm").addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    if (amount <= 0) {
+        alert("Booking amount is zero. Please select your seats again.");
+        return;
+    }
+
+    const method = document.getElementById("paymentMethod").value;
+    const reference = document.getElementById("paymentReference").value.trim();
+
+    if (!method || !reference) {
+        alert("Please enter all payment details.");
+        return;
+    }
+
+    const passenger = JSON.parse(
+        localStorage.getItem("passengerDetails") || "{}"
+    );
+
+    const seats = JSON.parse(
+        localStorage.getItem("selectedSeats") || "[]"
+    );
+
+    const booking = {
+
+        bookingId: "TE" + Date.now(),
+
+        name: passenger.name ||
+              localStorage.getItem("passengerName") || "Guest",
+
+        phone: passenger.phone ||
+               localStorage.getItem("passengerPhone") || "",
+
+        source: localStorage.getItem("source") || "Not Available",
+
+        destination: localStorage.getItem("destination") || "Not Available",
+
+        date: localStorage.getItem("journeyDate") || "Not Available",
+
+        transport: localStorage.getItem("selectedTransportType") || "Travel",
+
+        seats: seats,
+
+        amount: amount,
+
+        paymentMethod: method,
+
+        paymentReference: reference,
+
+        status: "Confirmed",
+
+        bookingDate: new Date().toLocaleString("en-IN")
+
+    };
+
+    localStorage.setItem("latestBooking", JSON.stringify(booking));
+
+    let bookings = JSON.parse(
+        localStorage.getItem("travelBookings") || "[]"
+    );
+
+    bookings.push(booking);
+
+    localStorage.setItem("travelBookings", JSON.stringify(bookings));
+
+    window.location.href = "confirmation.html";
+
+});
+
+</script>
+
+</body>
+</html>
